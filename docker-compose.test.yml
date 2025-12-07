@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ${{ secrets.DOCKER_USERNAME }}/learning-platform-backend:latest
+    environment:
+      MONGO_URL: mongodb://testuser:testpass@mongodb:27017/testdb?authSource=admin
+    depends_on:
+      - mongodb
+
+  frontend:
+    image: ${{ secrets.DOCKER_USERNAME }}/learning-platform-frontend:latest
+    depends_on:
+      - backend
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: testuser
+      MONGO_INITDB_ROOT_PASSWORD: testpass
+    ports:
+      - "27017:27017"

@@ -125,8 +125,8 @@ jobs:
       
       - name: Run integration tests
         run: |
-          docker-compose -f docker-compose.test.yml up --abort-on-container-exit
-          docker-compose -f docker-compose.test.yml down
+          docker compose -f docker-compose.test.yml up --abort-on-container-exit
+          docker compose -f docker-compose.test.yml down
 
   # Step 4: Trivy Security Scan
   security-scan:

@@ -38,7 +38,7 @@ RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 # Match your real backend port (change if needed)
-EXPOSE 3000
+EXPOSE 5000
 
 # Health check (requires /health route)
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \

@@ -418,7 +418,7 @@ const Dashboard = () => {
       {/* Enhanced Chatbot Button with Pulse Animation */}
       <button
         onClick={() => setIsChatOpen(!isChatOpen)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all z-50 group"
+        className="fixed bottom-4 right-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all z-50 group"
       >
         {!isChatOpen && (
           <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-75"></div>
@@ -428,7 +428,7 @@ const Dashboard = () => {
 
       {/* Enhanced Chatbot Window */}
       {isChatOpen && (
-        <div className="fixed bottom-24 right-6 w-[420px] h-[600px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-200">
+        <div className="fixed bottom-20 right-4 w-[420px] h-[600px] bg-white rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-200">
           {/* Chat Header */}
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 flex items-center justify-between">
             <div className="flex items-center space-x-3">

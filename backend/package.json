@@ -15,11 +15,11 @@
     "firebase-admin": "^11.11.0"
   },
   "jest": {
-  "coverageReporters": ["lcov", "text"]
-},
-
+    "coverageReporters": ["lcov", "text"]
+  },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0"
   },
   "keywords": [],
   "author": "",

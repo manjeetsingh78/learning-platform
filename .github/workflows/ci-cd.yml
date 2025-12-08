@@ -173,7 +173,7 @@ jobs:
       - name: Checkout GitOps repo
         uses: actions/checkout@v3
         with:
-          repository: ${{ github.repository }}-gitops
+          repository: manjeetsingh78/GitOps
           token: ${{ secrets.GITOPS_TOKEN }}
           path: gitops
       

@@ -149,10 +149,18 @@ jobs:
           output: 'trivy-backend-results.sarif'
           severity: 'CRITICAL,HIGH'
       
-      - name: Upload Trivy results to GitHub Security
+      - name: Upload frontend SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: '.'
+          sarif_file: trivy-frontend-results.sarif
+          category: trivy-frontend
+
+      - name: Upload backend SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-backend-results.sarif
+          category: trivy-backend
+
 
   # Step 5: GitOps - Update Kubernetes Manifests
   gitops-update:

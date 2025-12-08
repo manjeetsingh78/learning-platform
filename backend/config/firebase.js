@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 
+// 🔹 If running tests, export a full mock (no returns!)
 if (process.env.NODE_ENV === "test") {
   console.warn("⚠ Using MOCK Firebase Admin for Jest tests");
 
@@ -21,9 +22,9 @@ if (process.env.NODE_ENV === "test") {
     db: mockDb
   };
 
+  // IMPORTANT: do NOT continue to the real initialization
 } else {
-  /* -------- REAL FIREBASE INITIALIZATION (CI or DEV) -------- */
-
+  // ---------------- REAL FIREBASE (CI / Production) ----------------
   let serviceAccount = null;
 
   try {

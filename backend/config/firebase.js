@@ -1,8 +1,32 @@
 const admin = require("firebase-admin");
 
+// If running tests, return a mock Firebase app
+if (process.env.NODE_ENV === "test") {
+  console.warn("⚠ Using MOCK Firebase Admin for Jest tests");
+
+  const mockDb = {
+    ref: () => ({
+      set: jest.fn(),
+      get: jest.fn(),
+      child: jest.fn(),
+    }),
+  };
+
+  module.exports = {
+    admin: {
+      initializeApp: jest.fn(),
+      database: () => mockDb,
+    },
+    db: mockDb,
+  };
+
+  return;
+}
+
+/* --------- REAL FIREBASE INITIALIZATION FOR CI -------- */
+
 let serviceAccount = null;
 
-// Safely parse Firebase credentials (GitHub Actions only)
 try {
   if (process.env.FIREBASE_SERVICE_ACCOUNT) {
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
@@ -11,15 +35,13 @@ try {
   console.warn("⚠ Failed to parse FIREBASE_SERVICE_ACCOUNT:", err.message);
 }
 
-// Initialize Firebase properly in CI, fallback mock in testing
 if (serviceAccount) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://learning-platform-13df1-default-rtdb.firebaseio.com/"
   });
 } else {
-  // Local/Jest environment → no credentials needed
-  console.warn("⚠ FIREBASE_SERVICE_ACCOUNT missing — initializing Firebase with default app for tests");
+  console.warn("⚠ FIREBASE_SERVICE_ACCOUNT missing — initializing without real DB (local dev)");
   admin.initializeApp();
 }
 

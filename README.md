@@ -113,4 +113,3 @@ For Organizations: Achieve faster, safer, and more reliable releases with improv
 
 ## Workflow diagram
 <img width="1694" height="7510" alt="Untitled diagram-2025-10-15-080545" src="https://github.com/user-attachments/assets/26daaf6a-13df-40a9-8d20-c16948475fe5" />
-

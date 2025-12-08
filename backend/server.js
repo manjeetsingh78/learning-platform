@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./routes/auth');
+const express = require("express");
+const cors = require("cors");
+const authRoutes = require("./routes/auth");
 require("dotenv").config();
 
 const app = express();
@@ -10,16 +10,21 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api', authRoutes);
+app.use("/api", authRoutes);
 
-// Error handling middleware
+// Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
+  res.status(500).json({ error: "Something went wrong!" });
 });
 
-const PORT = process.env.PORT || 5000;
+// Export app for Jest tests
+module.exports = app;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only start server if not running in test mode
+if (process.env.NODE_ENV !== "test") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}

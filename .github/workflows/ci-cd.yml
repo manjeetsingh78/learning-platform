@@ -207,11 +207,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Update kubeconfig
+      - name: Configure kubeconfig
         run: |
+          mkdir -p $HOME/.kube
           aws eks update-kubeconfig \
             --name "${{ secrets.EKS_CLUSTER_NAME }}" \
             --region "${{ secrets.AWS_REGION }}"
+          echo "KUBECONFIG=$HOME/.kube/config" >> $GITHUB_ENV
+
+      - name: Verify kubeconfig context
+        run: |
+          kubectl config get-contexts
+          kubectl config current-context
 
       - name: Verify kubectl auth
         run: |
@@ -221,6 +228,7 @@ jobs:
         run: |
           kubectl get applications -n argocd learning-platform \
             -o jsonpath='{.status.sync.status}'
+
 
   # Step 7: Notifications
   notify:

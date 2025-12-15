@@ -18,7 +18,7 @@ spec:
       containers:
         - name: backend
           # This will be overwritten by your GitHub Actions sed command
-          image: manjeetsingh23/learning-platform-backend:3381875c5a21156d9a0770a25933d2e3ac080474
+          image: manjeetsingh23/learning-platform-backend:96c82dd7eb9f880d50200753f8c801e138bd94a4
           ports:
             - containerPort: 3000
           env:

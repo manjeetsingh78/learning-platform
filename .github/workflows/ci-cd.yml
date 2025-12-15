@@ -131,8 +131,11 @@ jobs:
     name: Trivy Security Scan
     runs-on: ubuntu-latest
     needs: build
-    
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4   # important
+
       - name: Run Trivy vulnerability scanner - Frontend
         uses: aquasecurity/trivy-action@master
         with:
@@ -140,7 +143,7 @@ jobs:
           format: 'sarif'
           output: 'trivy-frontend-results.sarif'
           severity: 'CRITICAL,HIGH'
-      
+
       - name: Run Trivy vulnerability scanner - Backend
         uses: aquasecurity/trivy-action@master
         with:
@@ -148,7 +151,7 @@ jobs:
           format: 'sarif'
           output: 'trivy-backend-results.sarif'
           severity: 'CRITICAL,HIGH'
-      
+
       - name: Upload frontend SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
@@ -160,7 +163,6 @@ jobs:
         with:
           sarif_file: trivy-backend-results.sarif
           category: trivy-backend
-
 
   # Step 5: GitOps - Update Kubernetes Manifests
   gitops-update:

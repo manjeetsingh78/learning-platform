@@ -207,24 +207,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::442042516006:role/GitHubActionsEKSRole
           aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
 
       - name: Configure kubeconfig
         run: |
-          mkdir -p $HOME/.kube
           aws eks update-kubeconfig \
             --name "${{ secrets.EKS_CLUSTER_NAME }}" \
             --region "${{ secrets.AWS_REGION }}"
-          echo "KUBECONFIG=$HOME/.kube/config" >> $GITHUB_ENV
 
       - name: Verify kubeconfig context
         run: |
-          kubectl config get-contexts
           kubectl config current-context
 
       - name: Verify kubectl auth

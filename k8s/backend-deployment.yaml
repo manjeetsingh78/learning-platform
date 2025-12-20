@@ -1,26 +1,40 @@
-containers:
-  - name: backend
-    image: manjeetsingh23/learning-platform-backend:919a938538b1757314da8768c9246b94ccc1bfde
-    ports:
-      - containerPort: 3000
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learning-platform-backend
+  namespace: learning-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: learning-platform-backend
+  template:
+    metadata:
+      labels:
+        app: learning-platform-backend
+    spec:
+      containers:
+        - name: backend
+          image: manjeetsingh23/learning-platform-backend:919a938538b1757314da8768c9246b94ccc1bfde
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
 
-    env:
-      - name: NODE_ENV
-        value: "production"
+            - name: FIREBASE_SERVICE_ACCOUNT
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-secret
+                  key: serviceAccount.json
 
-      - name: FIREBASE_SERVICE_ACCOUNT
-        valueFrom:
-          secretKeyRef:
-            name: firebase-secret
-            key: serviceAccount.json
+            - name: FIREBASE_DATABASE_URL
+              value: "https://learning-platform-13df1-default-rtdb.firebaseio.com"
 
-      - name: FIREBASE_DATABASE_URL
-        value: "https://learning-platform-13df1-default-rtdb.firebaseio.com"
-
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "128Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

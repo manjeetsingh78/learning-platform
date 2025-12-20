@@ -184,9 +184,14 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+
+          git fetch origin
+          git rebase origin/main
+
           git add k8s/
-          git commit -m "Update image tags to ${{ github.sha }}"
-          git push
+          git commit -m "Update image tags to ${{ github.sha }}" || echo "No changes to commit"
+          git push origin main
+
 
 
   # Step 6: Deploy to EKS

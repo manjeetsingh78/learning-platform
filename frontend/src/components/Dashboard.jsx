@@ -162,47 +162,113 @@ const Dashboard = () => {
   };
 
   const getAIResponse = (userMessage) => {
-    const msg = userMessage.toLowerCase();
-    
-    // Course recommendations
-    if (msg.includes('recommend') || msg.includes('suggest') || msg.includes('what should i learn')) {
-      const enrolled = courses.filter(c => c.enrolled).map(c => c.title).join(', ');
-      return `Based on your progress, here are my recommendations:\n\n🚀 Since you're 65% through Web Development Bootcamp, I suggest finishing that first!\n\n💡 Next steps:\n• Complete Python Programming (great foundation)\n• Try Machine Learning A-Z (builds on your Data Science course)\n• Mobile App Development (applies your web skills)\n\nYou're doing great with ${user.totalPoints} points! Keep up the momentum! 🎯`;
-    }
-    
-    // Learning tips
-    if (msg.includes('learn faster') || msg.includes('study tips') || msg.includes('improve')) {
-      return `Here are proven strategies to accelerate your learning:\n\n⚡ Active Learning:\n• Take notes by hand\n• Teach concepts to others\n• Build projects immediately\n\n🎯 Focus Techniques:\n• Pomodoro: 25 min focus, 5 min break\n• One course at a time\n• Practice daily (even 30 min helps)\n\n🧠 Retention Boosters:\n• Review within 24 hours\n• Space out your practice\n• Test yourself regularly\n\nWith 47 hours logged, you're building great habits! 📚`;
-    }
-    
-    // Motivation
-    if (msg.includes('motivat') || msg.includes('stuck') || msg.includes('give up')) {
-      return `I see you've completed 1 course and earned 850 points - that's fantastic! 🏆\n\n💪 Stay motivated:\n• Remember why you started\n• Celebrate small wins (like your 65% progress!)\n• Join study groups or forums\n• Take breaks when needed\n\n🎯 You're not alone:\n• 15,420 students in your Web Dev course\n• Active community support\n• Progress over perfection!\n\nYou've got this, ${user.username}! Every expert was once a beginner. 🌟`;
-    }
-    
-    // Progress questions
-    if (msg.includes('progress') || msg.includes('how am i doing') || msg.includes('stats')) {
-      return `📊 Your Learning Journey:\n\n✅ Completed: UI/UX Design Masterclass\n🔥 In Progress:\n• Web Development (65%) - Almost there!\n• Data Science (30%) - Great start!\n\n🏆 Achievements:\n• 850 points earned\n• 47 hours of learning\n• 3 courses enrolled\n\nYou're in the top 20% of learners! Keep pushing forward! 💪`;
-    }
-    
-    // Specific course questions
-    if (msg.includes('python') || msg.includes('machine learning') || msg.includes('ml')) {
-      return `🐍 Python & ML Path:\n\n1️⃣ Python Programming Complete\n• Perfect for beginners\n• 14 weeks, 20,100 students\n• Strong foundation\n\n2️⃣ Machine Learning A-Z\n• Advanced level\n• Builds on Data Science knowledge\n• Highly rated (4.9⭐)\n\nSince you're doing Data Science Fundamentals, Python would complement it perfectly! Want me to explain more about either course?`;
-    }
-    
-    // Career advice
-    if (msg.includes('career') || msg.includes('job') || msg.includes('work')) {
-      return `🎓 Career Guidance:\n\nWith your current skills:\n• Web Development + UI/UX = Front-end Developer\n• Data Science = Data Analyst/Scientist\n• Combined = Full-stack with analytics\n\n💼 Next steps:\n1. Build a portfolio (showcase projects)\n2. Complete Python (high demand)\n3. Network on LinkedIn\n4. Contribute to open source\n\nYour diverse skillset is valuable! 🚀`;
-    }
-    
-    // Time management
-    if (msg.includes('time') || msg.includes('busy') || msg.includes('schedule')) {
-      return `⏰ Time Management Tips:\n\n📅 Smart Scheduling:\n• Study same time daily (builds habit)\n• Break sessions into 25-30 min chunks\n• Use commute time for video lectures\n\n🎯 With 47 hours logged:\n• You're averaging ~1hr/day\n• That's excellent consistency!\n• Keep this pace to finish in 10-12 weeks\n\n💡 Quality > Quantity:\nConsistent small steps beat irregular marathons! 🐢`;
-    }
-    
-    // Default response
-    return `I'd be happy to help you with that! Here are some things I can assist with:\n\n🎯 Course Recommendations\n📚 Study Strategies\n💪 Motivation & Support\n📊 Progress Tracking\n🎓 Career Guidance\n⏰ Time Management\n\nYou're doing great with ${user.enrolledCourses} courses and ${user.totalPoints} points! What specific aspect would you like to explore?`;
-  };
+  const msg = userMessage.toLowerCase().trim();
+
+  /* ------------------ Greetings ------------------ */
+  if (
+    msg === 'hi' ||
+    msg === 'hello' ||
+    msg === 'hey' ||
+    msg === 'hii' ||
+    msg === 'good morning' ||
+    msg === 'good evening'
+  ) {
+    return `Hi ${user.username.split(' ')[0]} 👋  
+Great to see you back on LearnHub!
+
+How can I help you today?
+• 📚 Recommend a course  
+• 📊 Check your progress  
+• 💡 Study tips  
+• 🎓 Career guidance`;
+  }
+
+  /* ------------------ Small Talk ------------------ */
+  if (msg.includes('how are you')) {
+    return `I'm doing great 🤖✨  
+And you? You're already doing awesome with ${user.totalPoints} points earned!
+
+What would you like to work on today?`;
+  }
+
+  if (msg.includes('thank')) {
+    return `You're welcome 😊  
+I'm always here to help you learn and grow 🚀`;
+  }
+
+  /* ------------------ Course Recommendations ------------------ */
+  if (
+    msg.includes('recommend') ||
+    msg.includes('suggest') ||
+    msg.includes('what should i learn')
+  ) {
+    return `🎯 Based on your progress, here’s what I recommend:
+
+✅ Finish **Web Development Bootcamp** (65% done — almost there!)
+🐍 Start **Python Programming Complete** (strong foundation)
+🤖 Move to **Machine Learning A-Z** after that
+
+You already have **${user.totalPoints} points** — keep the momentum going! 💪`;
+  }
+
+  /* ------------------ Learning Tips ------------------ */
+  if (msg.includes('learn faster') || msg.includes('study') || msg.includes('improve')) {
+    return `⚡ Here are some proven learning tips:
+
+• Study in 25–30 min focus blocks  
+• Build projects while learning  
+• Revise within 24 hours  
+• Practice daily (even 30 mins helps!)
+
+You’ve logged **47 hours** already — consistency is your strength 📈`;
+  }
+
+  /* ------------------ Motivation ------------------ */
+  if (msg.includes('motivat') || msg.includes('tired') || msg.includes('give up')) {
+    return `💙 I get it — learning can feel hard sometimes.
+
+But look at this:
+🏆 1 course completed  
+🔥 3 courses enrolled  
+⭐ 850 points earned  
+
+You’re making real progress. Don’t stop now — future you will thank you 🚀`;
+  }
+
+  /* ------------------ Progress ------------------ */
+  if (msg.includes('progress') || msg.includes('stats') || msg.includes('how am i doing')) {
+    return `📊 Your current progress:
+
+• Web Development: **65%**
+• Data Science: **30%**
+• UI/UX Design: **Completed 🎉**
+
+You’re ahead of most learners. Keep going 💪`;
+  }
+
+  /* ------------------ Career ------------------ */
+  if (msg.includes('career') || msg.includes('job')) {
+    return `🎓 Career path suggestion:
+
+With your skills, you can target:
+• Frontend Developer  
+• Full-stack Developer  
+• Data Analyst (with Python + ML)
+
+Next step → build projects + portfolio 💼`;
+  }
+
+  /* ------------------ Fallback ------------------ */
+  return `🤔 I’m not fully sure what you mean, but I’m here to help!
+
+You can ask me about:
+• Courses  
+• Learning tips  
+• Career guidance  
+• Your progress  
+
+Try asking: *“Recommend a course for me”* 😊`;
+};
 
   const handleSendMessage = async (messageText = inputMessage) => {
     if (!messageText.trim()) return;

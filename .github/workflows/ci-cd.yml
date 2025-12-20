@@ -174,22 +174,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
 
-      - name: Update image tags
-        run: |
-          sed -i "s|image: .*-frontend:.*|image: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-frontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
-          sed -i "s|image: .*-backend:.*|image: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-backend:${{ github.sha }}|g" k8s/backend-deployment.yaml
-
-      - name: Commit and push changes
+      - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-          git fetch origin
-          git rebase origin/main
+      - name: Update image tags
+        run: |
+          sed -i "s|image: .*learning-platform-frontend:.*|image: ${{ secrets.DOCKER_USERNAME }}/learning-platform-frontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
+          sed -i "s|image: .*learning-platform-backend:.*|image: ${{ secrets.DOCKER_USERNAME }}/learning-platform-backend:${{ github.sha }}|g" k8s/backend-deployment.yaml
 
+      - name: Commit and push changes
+        run: |
           git add k8s/
-          git commit -m "Update image tags to ${{ github.sha }}" || echo "No changes to commit"
+          git commit -m "chore(gitops): update image tags to ${{ github.sha }}" || exit 0
           git push origin main
 
 

@@ -1,6 +1,6 @@
 containers:
   - name: backend
-    image: manjeetsingh23/learning-platform-backend:48cb214c84f986a7292257dfe6157581b683e81d
+    image: manjeetsingh23/learning-platform-backend:919a938538b1757314da8768c9246b94ccc1bfde
     ports:
       - containerPort: 3000
 

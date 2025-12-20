@@ -23,8 +23,8 @@ module.exports = app;
 
 // Only start server if not running in test mode
 if (process.env.NODE_ENV !== "test") {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  const PORT = 3000; // MUST match Kubernetes service
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on 0.0.0.0:${PORT}`);
   });
 }

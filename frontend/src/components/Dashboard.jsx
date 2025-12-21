@@ -594,7 +594,7 @@ Try asking: *“Recommend a course for me”* 😊`;
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;

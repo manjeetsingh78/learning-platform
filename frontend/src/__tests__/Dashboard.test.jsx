@@ -9,6 +9,8 @@ describe("Dashboard", () => {
 
   test("renders at least one course card", () => {
     render(<Dashboard />);
-    expect(screen.getByText(/Web Development Bootcamp/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Web Development Bootcamp/i)
+    ).toBeInTheDocument();
   });
 });

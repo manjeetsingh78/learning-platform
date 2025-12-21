@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: manjeetsingh23/learning-platform-backend:242b95f222fed087ac1d397cf735dd541d042fbb
+          image: manjeetsingh23/learning-platform-backend:b2db3b9a990e009571cb100dfd9e2d0b7c203098
           ports:
             - containerPort: 3000
           env:

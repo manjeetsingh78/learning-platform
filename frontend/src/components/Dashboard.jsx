@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const Dashboard = () => {
   const [user] = useState({
-    username: 'Abhishek Yadav',
-    email: 'abhishekyadav@gmail.com',
+    username: 'Manjeet Singh',
+    email: 'manjeet.singh23@lpu.in',
     createdAt: new Date(),
     enrolledCourses: 3,
     completedCourses: 1,

@@ -18,7 +18,7 @@ spec:
       containers:
         - name: frontend
           # This will be overwritten by your GitHub Actions sed command
-          image: manjeetsingh23/learning-platform-frontend:f530edc2af2055f8452b6122ba41181fce7cf52c
+          image: manjeetsingh23/learning-platform-frontend:5f8fe887416c902be1821aa263463f60e24f813e
           ports:
             - containerPort: 80
           env:

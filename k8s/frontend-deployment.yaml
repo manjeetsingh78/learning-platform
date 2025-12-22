@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learning-platform-frontend
+  namespace: learning-platform
+  labels:
+    app: learning-platform-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: learning-platform-frontend
+  template:
+    metadata:
+      labels:
+        app: learning-platform-frontend
+    spec:
+      containers:
+        - name: frontend
+          # This will be overwritten by your GitHub Actions sed command
+          image: manjeetsingh23/learning-platform-frontend:f530edc2af2055f8452b6122ba41181fce7cf52c
+          ports:
+            - containerPort: 80
+          env:
+            - name: NODE_ENV
+              value: "production"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

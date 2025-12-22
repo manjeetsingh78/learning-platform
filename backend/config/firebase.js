@@ -1,13 +1,51 @@
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
-// Replace with your Firebase service account key
-const serviceAccount = require('C:/Users/Acer/Downloads/learning-platform-13df1-firebase-adminsdk-fbsvc-d677349659.json');
+// 🔹 If running tests, export a full mock
+if (process.env.NODE_ENV === "test") {
+  console.warn("⚠ Using MOCK Firebase Admin for Jest tests");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://learning-platform-13df1-default-rtdb.firebaseio.com/"
-});
+  const mockRef = {
+    set: jest.fn(),
+    get: jest.fn(),
+    child: jest.fn().mockReturnThis()
+  };
 
-const db = admin.database();
+  const mockDb = {
+    ref: jest.fn(() => mockRef)
+  };
 
-module.exports = { admin, db };
+  module.exports = {
+    admin: {
+      initializeApp: jest.fn(),
+      database: () => mockDb
+    },
+    db: mockDb
+  };
+
+} else {
+  // ---------------- REAL FIREBASE (CI / Production) ----------------
+  let serviceAccount = null;
+
+  try {
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    }
+  } catch {
+    console.warn("⚠ Failed to parse FIREBASE_SERVICE_ACCOUNT");
+  }
+
+  if (serviceAccount) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: process.env.FIREBASE_DATABASE_URL
+    });
+  } else {
+    console.warn("⚠ FIREBASE_SERVICE_ACCOUNT missing — using unauthenticated DB access");
+    admin.initializeApp({
+      databaseURL: process.env.FIREBASE_DATABASE_URL
+    });
+  }
+
+  const db = admin.database();
+  module.exports = { admin, db };
+}
